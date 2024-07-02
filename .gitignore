@@ -1,7 +1,7 @@
-# Ignore the node_modules directory
+# Ignore all node_modules directories
 backend/node_modules/
-backend/.env
-
-# Ignore a specific file
 front/node_modules/
+
+# Ignore environment variables files
+backend/.env
 
