@@ -1,0 +1,5 @@
+# Ignore the node_modules directory
+backend/node_modules/
+
+# Ignore a specific file
+front/node_modules/
