@@ -2,6 +2,4 @@
 backend/node_modules/
 front/node_modules/
 
-# Ignore environment variables files
-backend/.env
 
