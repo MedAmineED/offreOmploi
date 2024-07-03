@@ -13,11 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
-const express_1 = __importDefault(require("express"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../dbConfig/models/User"));
-const router = express_1.default.Router();
-const secretKey = "your_secret_key"; // Change this to your secret key
+require('dotenv').config();
+const secretKey = process.env.SECRET_KEY;
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstname, lastname, age, role, numtel, niveauetude, diplome, experience, email, password } = req.body;
@@ -45,7 +44,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid password" });
         }
-        const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role }, secretKey, { expiresIn: "1h" });
+        const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role }, secretKey, { expiresIn: "12h" });
         res.json({ token });
     }
     catch (error) {
