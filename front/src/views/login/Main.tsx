@@ -32,7 +32,7 @@ function Main() {
   const handleLogin = async ()=> {
     try{
 
-        const token = await ApiRequests.login(role == 2? ApiURL.LOGIN_USER : ApiURL.ENTREPRISE, userLogin);
+        const token = await ApiRequests.login(role == 2? ApiURL.LOGIN_USER : ApiURL.LOGIN_COMPANY, userLogin);
 
       if(token.token){
           localStorage.setItem("userAuth", JSON.stringify(token));
