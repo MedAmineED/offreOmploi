@@ -8,6 +8,6 @@ interface Entreprise {
     createdAt?: Date;
     updatedAt?: Date;
   }
-  
+   
   export default Entreprise;
   

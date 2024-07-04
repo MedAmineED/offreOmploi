@@ -7,6 +7,7 @@ import Entreprise from "../dbConfig/models/Entreprise";
 
 
 // Create entreprise
+//api/entreprise
 export const createEntreprise = async (req: Request, res: Response): Promise<void> => {
     try {
         const newEntreprise = await Entreprise.create(req.body);

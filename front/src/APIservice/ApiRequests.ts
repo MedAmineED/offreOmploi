@@ -29,6 +29,28 @@ class ApiRequets {
           throw error;
         }
       }
+    //----------------
+    //----END USER
+    //----------------
+
+
+    //---------------------
+    //----BEGUIN ENTREPRISE
+    //----------------------
+
+    async addCompany(endpoint: string, data: User): Promise<User> {
+      try {
+        const response = await axios.post<User>(endpoint, data);
+        return response.data;
+      } catch (error) {
+         console.error("Error posting data:", error);
+        throw error;
+      }
+    }
+
+    //---------------------
+    //----BEGUIN ENTREPRISE
+    //----------------------
 }
 
 

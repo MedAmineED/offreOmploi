@@ -5,16 +5,21 @@ import illustrationUrl from "@/assets/images/illustration.svg";
 import ApiRequests from "@/ApiService/ApiRequests";
 import ApiURL from "@/ApiService/ApiURL";
 import { ChangeEvent, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import React from "react";
 
 function Main() {
+  const navigate = useNavigate();
 
+  const [role, setRole] = useState(2);
   const [userLogin, setUserLogin] = useState(
     {    
       email: "",
       password: ""
     }
   );
+ 
+  const[errorMessage, setErrorMessage] = useState<string>("");
 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>)=>{
@@ -25,9 +30,28 @@ function Main() {
 
 
   const handleLogin = async ()=> {
-     const token = await ApiRequests.login(ApiURL.LOGIN_USER, userLogin);
-     localStorage.setItem("userAuth", JSON.stringify(token));
-     console.log(token);
+    try{
+
+        const token = await ApiRequests.login(role == 2? ApiURL.LOGIN_USER : ApiURL.ENTREPRISE, userLogin);
+
+      if(token.token){
+          localStorage.setItem("userAuth", JSON.stringify(token));
+          console.log(token);
+          navigate("/")
+      }
+      else {
+          setErrorMessage("incoreect data");
+      }
+
+    }catch(err){
+      console.log("login error : " + err);
+      setErrorMessage("incorect data");
+    }
+  }
+
+
+  const handleSelectChangeRole = (e: ChangeEvent<HTMLSelectElement>)=> {
+    setRole(parseInt(e.target.value));
   }
 
 
@@ -86,6 +110,7 @@ function Main() {
                     className="intro-x login__input form-control py-3 px-4 block"
                     placeholder="Email"
                   />
+                  <p className="text-red-600">{errorMessage}</p>
                   <input
                     onChange={(e)=> {handleInputChange(e)}}
                     value={userLogin.password}
@@ -94,7 +119,16 @@ function Main() {
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Password"
                   />
+                  <p className="text-red-600">{errorMessage}</p>
                 </div>
+                <select 
+                    onChange={(e)=> {handleSelectChangeRole(e)}}
+                    value={role}
+                    className="intro-x login__input form-control py-3 px-4 block mt-4">
+                    <option disabled value={""}>choose option</option>
+                    <option  value={2}>candidate</option>
+                    <option value={3}>company</option>
+                  </select>
                 <div className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
                   <div className="flex items-center mr-auto">
                     <input

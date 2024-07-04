@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../dbConfig/models/User";
+import Entreprise from "../dbConfig/models/Entreprise";
 
 
 require('dotenv').config();
@@ -34,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
  ------------------------------------------------*/
 
 //api/auth/login
-export const login =  async (req: Request, res: Response) => {
+export const loginUser =  async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
 
@@ -49,6 +50,27 @@ export const login =  async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign({ id: user.id, role: user.role }, secretKey, { expiresIn: "12h" });
+        res.json({ token });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+};
+
+
+export const loginCompany =  async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+
+        const company = await Entreprise.findOne({ where: { email } });
+        if (!company) {
+            return res.status(400).json({ message: "Invalid email" });
+        }
+        
+        const isMatch = password == company.pwd;
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+        const token = jwt.sign({ id: company.id, role: "company" }, secretKey, { expiresIn: "12h" });
         res.json({ token });
     } catch (error) {
         res.status(500).json({ message: "Server error", error });

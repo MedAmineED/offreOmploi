@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteEntreprise = exports.updateEntreprise = exports.getEntrepriseById = exports.getAllEntreprises = exports.createEntreprise = void 0;
 const Entreprise_1 = __importDefault(require("../dbConfig/models/Entreprise"));
 // Create entreprise
+//api/entreprise
 const createEntreprise = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newEntreprise = yield Entreprise_1.default.create(req.body);

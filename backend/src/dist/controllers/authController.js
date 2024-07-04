@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.auhthorization = exports.login = exports.register = void 0;
+exports.auhthorization = exports.loginCompany = exports.loginUser = exports.register = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../dbConfig/models/User"));
+const Entreprise_1 = __importDefault(require("../dbConfig/models/Entreprise"));
 require('dotenv').config();
 const secretKey = process.env.SECRET_KEY;
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,7 +38,7 @@ exports.register = register;
  * @access  public
  ------------------------------------------------*/
 //api/auth/login
-const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         const user = yield User_1.default.findOne({ where: { email } });
@@ -55,7 +56,26 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ message: "Server error", error });
     }
 });
-exports.login = login;
+exports.loginUser = loginUser;
+const loginCompany = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, password } = req.body;
+        const company = yield Entreprise_1.default.findOne({ where: { email } });
+        if (!company) {
+            return res.status(400).json({ message: "Invalid email" });
+        }
+        const isMatch = password == company.pwd;
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+        const token = jsonwebtoken_1.default.sign({ id: company.id, role: "company" }, secretKey, { expiresIn: "12h" });
+        res.json({ token });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+exports.loginCompany = loginCompany;
 //api/auth/verifyUser
 const auhthorization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const headerAuth = req.header('Authorization');

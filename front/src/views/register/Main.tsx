@@ -8,8 +8,13 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./scrollbarStyle.css";
 import React from "react";
 import User from "../../entity/User";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
+
+  const navigate = useNavigate();
+
+  const [role, setRole] = useState(2);
 
   const [user , setUser] = useState({
     firstname: "",
@@ -24,27 +29,52 @@ function Main() {
     password: ""
   });
 
+  const [company, setCompany] = useState({
+    nom_ent: "",
+    email: "",
+    pwd: "",
+    numtel: "",
+    location: ""
+  })
+
+
+
   useEffect(() => {
     dom("body").removeClass("main").removeClass("error-page").addClass("login");
     addUserReq();
   }, []);
 
+  const handleSelectChangeRole = (e: ChangeEvent<HTMLSelectElement>)=> {
+    setRole(parseInt(e.target.value));
+  }
 
   const handleInputChange  = (e: ChangeEvent<HTMLInputElement>) => {
-    const newUser = {...user, [e.target.name] : e.target.value }
-    setUser({...newUser});
+    if(role ==2) {
+      const newUser = {...user, [e.target.name] : e.target.value }
+      if(role == 2)
+      setUser({...newUser});
+    } else {
+      const newCompany = {...company, [e.target.name] : e.target.value }
+      setCompany({...newCompany});
+    }
   }
 
   const addUserReq = async () => {
     try {
-      
-      const addedUser = await ApiRequests.addedUser(ApiUrl.REGISTER_USER, user);
-      console.log(user);
-      console.log("Added User:", addedUser);
+      if(role == 2){
+        const addedUser = await ApiRequests.addedUser(ApiUrl.REGISTER_USER, user);
+        console.log("user added");
+      }
+      else {
+        const addCompany = await ApiRequests.addCompany(ApiUrl.ENTREPRISE, company);
+        console.log("company added");
+      }
+      navigate('/login');
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.error("Error adding user/company:", error);
     }
   };
+
 
   return (
     <>
@@ -89,83 +119,134 @@ function Main() {
                   e-commerce accounts in one place
                 </div>
                 <div className="intro-x mt-8">
-                  <select className="intro-x login__input form-control py-3 px-4 block">
+                  <select 
+                    onChange={(e)=> {handleSelectChangeRole(e)}}
+                    value={role}
+                    className="intro-x login__input form-control py-3 px-4 block">
                     <option disabled value={""}>choose option</option>
-                    <option value={"company"}>company</option>
-                    <option value={"candidate"}>candidate</option>
+                    <option  value={2}>candidate</option>
+                    <option value={3}>company</option>
                   </select>
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value={user.firstname}
-                    name="firstname"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="First Name"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value={user.lastname}
-                    name="lastname"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Last Name"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.age}
-                    name = "age"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Age"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.numtel}
-                    name = "numtel"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Phone number"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.niveauetude}
-                    name = "niveauetude"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Study's level"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.diplome}
-                    name = "diplome"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Diploma"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.experience}
-                    name = "experience"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Experience"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.email}
-                    name = "email"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Email"
-                  />
-                  <input
-                    onChange={(e)=>{handleInputChange(e)}}
-                    value ={user.password}
-                    name = "password"
-                    type="text"
-                    className="intro-x login__input form-control py-3 px-4 block mt-4"
-                    placeholder="Password"
-                  />
+                  {
+                    role == 2? 
+                      <>
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value={user.firstname}
+                            name="firstname"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="First Name"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value={user.lastname}
+                            name="lastname"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Last Name"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.age}
+                            name = "age"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Age"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.numtel}
+                            name = "numtel"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Phone number"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.niveauetude}
+                            name = "niveauetude"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Study's level"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.diplome}
+                            name = "diplome"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Diploma"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.experience}
+                            name = "experience"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Experience"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.email}
+                            name = "email"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Email"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={user.password}
+                            name = "password"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Password"
+                          />
+                      </>
+                       : 
+                   <>
+                         <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={company.nom_ent}
+                            name = "nom_ent"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="company name"
+                          />
+                         <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={company.email}
+                            name = "email"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Email"
+                          />
+                         <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={company.numtel}
+                            name = "numtel"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="phone number"
+                          />
+                         <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={company.location}
+                            name = "location"
+                            type="text"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Adress"
+                          />
+                          <input
+                            onChange={(e)=>{handleInputChange(e)}}
+                            value ={company.pwd}
+                            name = "pwd"
+                            type="password"
+                            className="intro-x login__input form-control py-3 px-4 block mt-4"
+                            placeholder="Password"
+                          />
+                   </>
+                  }
                   <div className="intro-x w-full grid grid-cols-12 gap-4 h-1 mt-3">
                     <div className="col-span-3 h-full rounded bg-success"></div>
                     <div className="col-span-3 h-full rounded bg-success"></div>
