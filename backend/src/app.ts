@@ -18,6 +18,15 @@ app.use(express.urlencoded({extended : true}));
 
 
 
+// Cors Policy
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+
+
 
 app.use(userRouter);
 app.use(entrepriseRouter);
@@ -25,11 +34,6 @@ app.use(offreRouter);
 app.use(demandeEmploiRouter);
 app.use("/api/auth", authRouter);
 
-
-// Cors Policy
-app.use(cors({ 
-    origin: "http://localhost:3000"
-  }));
 
 // Start server
 const PORT = process.env.PORT || 3000;

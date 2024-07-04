@@ -9,4 +9,6 @@ const authRouter = express_1.default.Router();
 const secretKey = "your_secret_key"; // Change this to your secret key
 authRouter.post("/register", authController_1.register);
 authRouter.post("/login", authController_1.login);
+//api/auth/verifyUser
+authRouter.post("/verifyUser", authController_1.auhthorization);
 exports.default = authRouter;

@@ -26,15 +26,17 @@ const app = (0, express_1.default)();
 require('dotenv').config();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+// Cors Policy
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(userRouter_1.default);
 app.use(entrepriseRouter_1.default);
 app.use(offreRouter_1.default);
 app.use(demandeEmploiRouter_1.default);
 app.use("/api/auth", authRouter_1.default);
-// Cors Policy
-app.use(cors({
-    origin: "http://localhost:3000"
-}));
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => __awaiter(void 0, void 0, void 0, function* () {

@@ -2,6 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import User from "../dbConfig/models/User";
 
 const jwt = require ("jsonwebtoken");
+require('dotenv').config();
+
+
+
+const secretKey = process.env.SECRET_KEY as string; 
+
 
 declare module "express-serve-static-core" {
     interface Request {
@@ -10,12 +16,12 @@ declare module "express-serve-static-core" {
   }
 
 // Verify Token
-function tokenVerification(req : Request, res : Response, next: NextFunction) {
+export const tokenVerification = (req : Request, res : Response, next: NextFunction) => {
     const Token = req.headers.authorization;
     if (Token) {
       const token = Token.split(" ")[1];
       try {
-        const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedPayload = jwt.verify(token, secretKey);
         req.user = decodedPayload;
         next();
       } catch (error) {

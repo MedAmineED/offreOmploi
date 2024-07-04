@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.register = void 0;
+exports.auhthorization = exports.login = exports.register = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../dbConfig/models/User"));
 require('dotenv').config();
@@ -32,6 +32,10 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.register = register;
+/**-----------------------------------------------
+ * @method  POST
+ * @access  public
+ ------------------------------------------------*/
 //api/auth/login
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -52,3 +56,19 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
+//api/auth/verifyUser
+const auhthorization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const headerAuth = req.header('Authorization');
+    if (!headerAuth) {
+        return res.status(401).json({ message: 'Access Denied' });
+    }
+    const token = headerAuth.split(" ")[1];
+    try {
+        const verified = jsonwebtoken_1.default.verify(token, secretKey);
+        res.status(200).json({ message: 'Token is valid', user: verified });
+    }
+    catch (err) {
+        res.status(400).json({ message: 'Invalid Token' });
+    }
+});
+exports.auhthorization = auhthorization;

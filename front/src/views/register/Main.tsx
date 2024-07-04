@@ -3,7 +3,7 @@ import dom from "@left4code/tw-starter/dist/js/dom";
 import logoUrl from "@/assets/images/logo.svg";
 import illustrationUrl from "@/assets/images/illustration.svg";
 import ApiRequests from "@/ApiService/ApiRequests";
-import ApiUrl from "@/ApiService/ApiURL"
+import ApiUrl from "@/ApiService/ApiURL";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./scrollbarStyle.css";
 import React from "react";

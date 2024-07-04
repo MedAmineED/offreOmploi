@@ -28,6 +28,11 @@ export const register = async (req: Request, res: Response) => {
 };
 
 
+/**-----------------------------------------------
+ * @method  POST
+ * @access  public
+ ------------------------------------------------*/
+
 //api/auth/login
 export const login =  async (req: Request, res: Response) => {
     try {
@@ -49,3 +54,21 @@ export const login =  async (req: Request, res: Response) => {
         res.status(500).json({ message: "Server error", error });
     }
 };
+
+
+
+//api/auth/verifyUser
+export const auhthorization = async(req : Request, res : Response)=>{
+    const headerAuth = req.header('Authorization');
+
+    if (!headerAuth) {
+        return res.status(401).json({ message: 'Access Denied' });
+    }
+    const token = headerAuth.split(" ")[1];
+    try {
+        const verified = jwt.verify(token, secretKey);
+        res.status(200).json({ message: 'Token is valid', user: verified });
+    } catch (err) {
+        res.status(400).json({ message: 'Invalid Token' });
+    }
+  }
