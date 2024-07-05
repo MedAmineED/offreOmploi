@@ -31,6 +31,12 @@ __decorate([
         type: sequelize_typescript_1.DataType.STRING
     }),
     __metadata("design:type", String)
+], Offre.prototype, "title", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING
+    }),
+    __metadata("design:type", String)
 ], Offre.prototype, "discreption", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({

@@ -5,6 +5,8 @@ interface ApiUrl {
     readonly LOGIN_COMPANY : string;
 
     readonly ENTREPRISE : string;
+
+    readonly OFFRE : string;
 }
 
 
@@ -15,7 +17,8 @@ const apiUrls : ApiUrl = {
     REGISTER_USER : httpUrl + "/api/auth/register",
     LOGIN_USER : httpUrl + "/api/auth/login",
     ENTREPRISE : httpUrl + "/api/entreprise",
-    LOGIN_COMPANY : httpUrl + "/api/auth/loginCompany"
+    LOGIN_COMPANY : httpUrl + "/api/auth/loginCompany",
+    OFFRE : httpUrl + "/api/offre"
 }
 
 export default apiUrls;

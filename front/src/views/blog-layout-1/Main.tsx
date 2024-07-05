@@ -7,10 +7,30 @@ import {
   DropdownContent,
   DropdownItem,
 } from "@/base-components";
-import { faker as $f } from "@/utils";
-import * as $_ from "lodash";
+import React, { useEffect, useState } from "react";
+import ApiUrl from "@/ApiService/ApiURL";
+import ApiRequests from "@/ApiService/ApiRequests";
+import Offre from "../../entity/Offre";
 
 function Main() {
+  
+  const [allOffer, setAllOffer] = useState<Offre[]>();
+
+  const getOffer = async () => {
+    try {
+        const offer = await ApiRequests.getOfferList(ApiUrl.OFFRE);
+        setAllOffer([...offer])
+    } catch (error) {
+      console.error("Error adding user/company:", error);
+    }
+  };
+  
+  useEffect(()=> {
+    getOffer();
+    
+  }, [])
+
+
   return (
     <>
       <div className="intro-y flex flex-col sm:flex-row items-center mt-8">
@@ -23,29 +43,17 @@ function Main() {
       </div>
       <div className="intro-y grid grid-cols-12 gap-6 mt-5">
         {/* BEGIN: Blog Layout */}
-        {$_.take($f(), 9).map((faker, fakerKey) => (
+        {allOffer?.map((ofr, index) => (
           <div
-            key={fakerKey}
+            key={index + ofr.id}
             className="intro-y col-span-12 md:col-span-6 xl:col-span-4 box"
           >
             <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 px-5 py-4">
-              <div className="w-10 h-10 flex-none image-fit">
-                <img
-                  alt="Midone Tailwind HTML Admin Template"
-                  className="rounded-full"
-                  src={faker.photos[0]}
-                />
-              </div>
+
               <div className="ml-3 mr-auto">
                 <a href="" className="font-medium">
-                  {faker.users[0].name}
+                  {ofr.title}
                 </a>
-                <div className="flex text-slate-500 truncate text-xs mt-0.5">
-                  <a className="text-primary inline-block truncate" href="">
-                    {faker.products[0].category}
-                  </a>
-                  <span className="mx-1">•</span> {faker.formattedTimes[0]}
-                </div>
               </div>
               <Dropdown className="ml-3">
                 <DropdownToggle
@@ -69,18 +77,11 @@ function Main() {
               </Dropdown>
             </div>
             <div className="p-5">
-              <div className="h-40 2xl:h-56 image-fit">
-                <img
-                  alt="Midone Tailwind HTML Admin Template"
-                  className="rounded-md"
-                  src={faker.images[0]}
-                />
-              </div>
               <a href="" className="block font-medium text-base mt-5">
-                {faker.news[0].title}
+                {ofr.discreption}
               </a>
               <div className="text-slate-600 dark:text-slate-500 mt-2">
-                {faker.news[0].shortContent}
+                Contract type : {ofr.contactType}
               </div>
             </div>
             <div className="flex items-center px-5 py-3 border-t border-slate-200/60 dark:border-darkmode-400">
@@ -93,13 +94,13 @@ function Main() {
                 <Lucide icon="Bookmark" className="w-3 h-3" />
               </Tippy>
               <div className="intro-x flex mr-2">
-                <div className="intro-x w-8 h-8 image-fit">
+                <div className="intro-x w-8 h-8 image-fit -ml-4">
                   <Tippy
                     tag="img"
                     alt="Midone Tailwind HTML Admin Template"
                     className="rounded-full border border-white zoom-in"
-                    src={faker.photos[0]}
-                    content={faker.users[0].name}
+                    // src={}
+                    content={"jjjj"}
                   />
                 </div>
                 <div className="intro-x w-8 h-8 image-fit -ml-4">
@@ -107,17 +108,8 @@ function Main() {
                     tag="img"
                     alt="Midone Tailwind HTML Admin Template"
                     className="rounded-full border border-white zoom-in"
-                    src={faker.photos[1]}
-                    content={faker.users[1].name}
-                  />
-                </div>
-                <div className="intro-x w-8 h-8 image-fit -ml-4">
-                  <Tippy
-                    tag="img"
-                    alt="Midone Tailwind HTML Admin Template"
-                    className="rounded-full border border-white zoom-in"
-                    src={faker.photos[2]}
-                    content={faker.users[2].name}
+                    // src={}
+                    content={"aaa"}
                   />
                 </div>
               </div>
@@ -142,13 +134,13 @@ function Main() {
               <div className="w-full flex text-slate-500 text-xs sm:text-sm">
                 <div className="mr-2">
                   Comments:{" "}
-                  <span className="font-medium">{faker.totals[0]}</span>
+                  <span className="font-medium">{"totals[0]"}</span>
                 </div>
                 <div className="mr-2">
-                  Views: <span className="font-medium">{faker.totals[1]}k</span>
+                  Views: <span className="font-medium">{"totals[1]"}k</span>
                 </div>
                 <div className="ml-auto">
-                  Likes: <span className="font-medium">{faker.totals[2]}k</span>
+                  Likes: <span className="font-medium">{"totals[2]"}k</span>
                 </div>
               </div>
               <div className="w-full flex items-center mt-3">
@@ -156,7 +148,7 @@ function Main() {
                   <img
                     alt="Midone Tailwind HTML Admin Template"
                     className="rounded-full"
-                    src={faker.photos[0]}
+                    // src={}
                   />
                 </div>
                 <div className="flex-1 relative text-slate-600">

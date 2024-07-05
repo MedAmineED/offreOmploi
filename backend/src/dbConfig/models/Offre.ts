@@ -28,6 +28,11 @@ import {
     @Column({
         type : DataType.STRING
     })
+    declare title : string;
+
+    @Column({
+        type : DataType.STRING
+    })
     declare discreption : string;
 
     @Column({
