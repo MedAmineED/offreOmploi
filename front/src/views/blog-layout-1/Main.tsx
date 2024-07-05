@@ -88,81 +88,11 @@ function Main() {
               <Tippy
                 tag="a"
                 href=""
-                className="intro-x w-8 h-8 flex items-center justify-center rounded-full border border-slate-300 dark:border-darkmode-400 dark:bg-darkmode-300 dark:text-slate-300 text-slate-500 mr-2"
-                content="Bookmark"
-              >
-                <Lucide icon="Bookmark" className="w-3 h-3" />
-              </Tippy>
-              <div className="intro-x flex mr-2">
-                <div className="intro-x w-8 h-8 image-fit -ml-4">
-                  <Tippy
-                    tag="img"
-                    alt="Midone Tailwind HTML Admin Template"
-                    className="rounded-full border border-white zoom-in"
-                    // src={}
-                    content={"jjjj"}
-                  />
-                </div>
-                <div className="intro-x w-8 h-8 image-fit -ml-4">
-                  <Tippy
-                    tag="img"
-                    alt="Midone Tailwind HTML Admin Template"
-                    className="rounded-full border border-white zoom-in"
-                    // src={}
-                    content={"aaa"}
-                  />
-                </div>
-              </div>
-              <Tippy
-                tag="a"
-                href=""
-                className="intro-x w-8 h-8 flex items-center justify-center rounded-full text-primary bg-primary/10 dark:bg-darkmode-300 dark:text-slate-300 ml-auto"
-                content="Share"
-              >
-                <Lucide icon="Share2" className="w-3 h-3" />
-              </Tippy>
-              <Tippy
-                tag="a"
-                href=""
                 className="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white ml-2"
-                content="Download PDF"
+                content="Hire"
               >
                 <Lucide icon="Share" className="w-3 h-3" />
               </Tippy>
-            </div>
-            <div className="px-5 pt-3 pb-5 border-t border-slate-200/60 dark:border-darkmode-400">
-              <div className="w-full flex text-slate-500 text-xs sm:text-sm">
-                <div className="mr-2">
-                  Comments:{" "}
-                  <span className="font-medium">{"totals[0]"}</span>
-                </div>
-                <div className="mr-2">
-                  Views: <span className="font-medium">{"totals[1]"}k</span>
-                </div>
-                <div className="ml-auto">
-                  Likes: <span className="font-medium">{"totals[2]"}k</span>
-                </div>
-              </div>
-              <div className="w-full flex items-center mt-3">
-                <div className="w-8 h-8 flex-none image-fit mr-3">
-                  <img
-                    alt="Midone Tailwind HTML Admin Template"
-                    className="rounded-full"
-                    // src={}
-                  />
-                </div>
-                <div className="flex-1 relative text-slate-600">
-                  <input
-                    type="text"
-                    className="form-control form-control-rounded border-transparent bg-slate-100 pr-10"
-                    placeholder="Post a comment..."
-                  />
-                  <Lucide
-                    icon="Smile"
-                    className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         ))}
