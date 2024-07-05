@@ -20,35 +20,35 @@ import {
             autoIncrement: true})
     declare id : number;
 
-
+    @Column({
+        type : DataType.INTEGER
+    })
+    declare id_ent : number;
 
     @Column({
         type : DataType.STRING
     })
-    declare id_ent : string;
-
-
-    @Column({
-        type : DataType.STRING
-    })
-    declare poste : string;
+    declare discreption : string;
 
     @Column({
-        type : DataType.STRING
+        type : DataType.INTEGER
     })
-    declare experience : string;
-
-    @Column({
-        type : DataType.STRING
-    })
-    declare email : string;
+    declare experience : number;
 
     @Column({
         type : DataType.STRING
     })
     declare location : string;
 
-    
+    @Column({
+        type : DataType.STRING
+    })
+    declare contactType : string;
+
+    @Column({
+        type : DataType.STRING
+    })
+    declare studyLevel : string;    
  }
 
  export default Offre;

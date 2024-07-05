@@ -57,6 +57,7 @@ export const loginUser =  async (req: Request, res: Response) => {
 };
 
 
+//api/auth/loginCompany
 export const loginCompany =  async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
@@ -65,7 +66,7 @@ export const loginCompany =  async (req: Request, res: Response) => {
         if (!company) {
             return res.status(400).json({ message: "Invalid email" });
         }
-        
+
         const isMatch = password == company.pwd;
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid password" });

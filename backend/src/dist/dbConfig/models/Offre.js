@@ -22,34 +22,40 @@ __decorate([
 ], Offre.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING
+        type: sequelize_typescript_1.DataType.INTEGER
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], Offre.prototype, "id_ent", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING
     }),
     __metadata("design:type", String)
-], Offre.prototype, "poste", void 0);
+], Offre.prototype, "discreption", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING
+        type: sequelize_typescript_1.DataType.INTEGER
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], Offre.prototype, "experience", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING
     }),
     __metadata("design:type", String)
-], Offre.prototype, "email", void 0);
+], Offre.prototype, "location", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING
     }),
     __metadata("design:type", String)
-], Offre.prototype, "location", void 0);
+], Offre.prototype, "contactType", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING
+    }),
+    __metadata("design:type", String)
+], Offre.prototype, "studyLevel", void 0);
 Offre = __decorate([
     (0, sequelize_typescript_1.Table)({ timestamps: true, tableName: "offre", modelName: "Offre" })
 ], Offre);
